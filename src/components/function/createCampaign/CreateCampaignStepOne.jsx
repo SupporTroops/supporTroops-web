@@ -19,8 +19,8 @@ function CreateCampaignStepOne({ formValues, handleChange }) {
             <TextareaAutosize
                 minRows={10}
                 placeholder="Campaign Details"
-                name="description"
-                value={formValues.description}
+                name="campaignDetails"
+                value={formValues.campaignDetails}
                 onChange={handleChange}
                 className={classes.textArea}
             />
@@ -50,7 +50,7 @@ function CreateCampaignStepOne({ formValues, handleChange }) {
                 />
             </RadioGroup>
             <ButtonCustom
-                variant="contained"
+                variant="outlined"
                 component="label"
                 style={{ marginTop: "2rem" }}
             >

@@ -8,16 +8,16 @@ function FormButtonGroup({ checkActiveStep, handleStepButtons }) {
         <div className={classes.ButtonGroup}>
             <ButtonCustom
                 variant="outlined"
-                style={{ display: checkActiveStep([1, 2]) ? "" : "none" }}
+                style={{ display: checkActiveStep([1, 2, 3]) ? "" : "none" }}
                 onClick={handleStepButtons}
                 horizontalPadding={4}
             >
                 back
             </ButtonCustom>
             <ButtonCustom
-                variant="outlined"
+                variant="contained"
                 style={{
-                    display: checkActiveStep([0, 1]) ? "" : "none",
+                    display: checkActiveStep([0, 1, 2]) ? "" : "none",
                     marginLeft: 3,
                 }}
                 onClick={handleStepButtons}
@@ -28,7 +28,7 @@ function FormButtonGroup({ checkActiveStep, handleStepButtons }) {
             <ButtonCustom
                 variant="contained"
                 style={{
-                    display: checkActiveStep([2]) ? "" : "none",
+                    display: checkActiveStep([3]) ? "" : "none",
                     marginLeft: 3,
                 }}
                 horizontalPadding={4}

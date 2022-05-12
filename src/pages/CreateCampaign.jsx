@@ -11,16 +11,25 @@ import { createUseStyles } from "react-jss";
 import CreateCampaignStepOne from "../components/function/createCampaign/CreateCampaignStepOne";
 import FormButtonGroup from "../components/function/createCampaign/FormButtonGroup";
 import CreateCampaignStepTwo from "../components/function/createCampaign/CreateCampaignStepTwo";
+import { campaignFormHandler } from "../utils/functions";
+import CreateCampaignStepThree from "../components/function/createCampaign/CreateCampaignStepThree";
+import CreateCampaignStepFour from "../components/function/createCampaign/CreateCampaignStepFour";
 
-const steps = ["Campaign Details", "Vendor Details", "Host Details"];
+const steps = ["Campaign Details", "Host Details", "Vendor Details", "Review"];
 const defaultFormValues = {
     campaignName: "",
-    description: "",
-    amount: 0,
+    campaignDetails: "",
     campaignCause: "nonProfit",
     coverImage: null,
     numberOfVendors: 2,
-    vendorList: {} 
+    vendorsList: {
+        1: { id: "", amount: 0 },
+        2: { id: "", amount: 0 },
+    },
+    hostName: "",
+    organisation: "",
+    roleInOrganisation: "",
+    amountToRaise: 0,
 };
 
 function CreateCampaign(props) {
@@ -29,26 +38,7 @@ function CreateCampaign(props) {
     const [formValues, setFormValues] = useState(defaultFormValues);
 
     const handleChange = (event) => {
-        let { name, value } = event.target;
-
-        // Handling Image
-        if (event.target.name === "coverImage") {
-            value = event.target.files[0];
-        }
-
-        //  Handling Vendor List
-        if (event.target.name.startWith('vendor')) {
-            setFormValues({
-                ...formValues,
-                vendorList[]
-            })
-        }
-
-        setFormValues({
-            ...formValues,
-            [name]: value,
-        });
-        console.log(formValues);
+        campaignFormHandler(event, formValues, setFormValues);
     };
 
     // Stepper Handler
@@ -91,12 +81,22 @@ function CreateCampaign(props) {
                                 handleChange={handleChange}
                             />
                         )}
+                        {checkActiveStep([2]) && (
+                            <CreateCampaignStepThree
+                                formValues={formValues}
+                                handleChange={handleChange}
+                            />
+                        )}
                         {checkActiveStep([1]) && (
                             <CreateCampaignStepTwo
                                 formValues={formValues}
                                 handleChange={handleChange}
                             />
                         )}
+                        {checkActiveStep([3]) && (
+                            <CreateCampaignStepFour formValues={formValues} />
+                        )}
+
                         <FormButtonGroup
                             checkActiveStep={checkActiveStep}
                             handleStepButtons={handleStepButtons}
@@ -112,6 +112,7 @@ const useStyles = createUseStyles({
     container: {
         marginTop: "3rem",
         marginBottom: "3rem",
+        marginLeft: "1rem",
         display: "flex",
     },
     stepperContainer: {
