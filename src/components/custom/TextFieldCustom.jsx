@@ -9,6 +9,9 @@ function TextFieldCustom({
     value,
     onChange,
     style,
+    type,
+    required,
+    helperText,
 }) {
     const classes = useStyles();
     return (
@@ -19,6 +22,9 @@ function TextFieldCustom({
             value={value}
             onChange={onChange}
             className={classes.textField}
+            required={required}
+            type={type}
+            helperText={helperText}
             style={{
                 ...style,
             }}

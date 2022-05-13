@@ -27,6 +27,7 @@ function CreateCampaignStepThree({ formValues, handleChange }) {
                 name="amountToRaise"
                 value={formValues.amountToRaise}
                 onChange={handleChange}
+                type="number"
                 style={{ marginTop: 30, marginBotton: "0 !important" }}
             />
         </React.Fragment>

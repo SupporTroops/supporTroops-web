@@ -11,6 +11,8 @@ import ProtectedRoute from "./components/custom/ProtectedRoute";
 // Pages
 import Home from "./pages/Home";
 import CreateCampaign from "./pages/CreateCampaign";
+import Dashboard from "./pages/Dashboard";
+import CampaignDetails from "./pages/CampaignDetails";
 
 function App() {
     return (
@@ -19,17 +21,19 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route element={<ProtectedRoute />}>
-                        <Route
-                            path="/dashboard"
-                            element={<p>HJ the great</p>}
-                        />
+                        <Route path="/dashboard" element={<Dashboard />} />
                         <Route
                             path="/create_campaign"
                             element={<CreateCampaign />}
                         />
                     </Route>
                     <Route path="/campaign" element={<p>Campaign</p>} />
+                    <Route
+                        path="/campaign_details/:campaign_id"
+                        element={<CampaignDetails />}
+                    />
                     <Route path="/login" element={<p>Login Page</p>} />
+                    <Route path="*" element={<p>Error Page</p>} />
                 </Routes>
             </ScreenCustom>
         </ThemeProvider>

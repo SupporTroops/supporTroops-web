@@ -141,7 +141,7 @@ const styles = {
         height: 90,
     },
     button: {
-        marginRight: 3,
+        marginRight: "1rem",
     },
 };
 

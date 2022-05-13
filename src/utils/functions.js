@@ -16,13 +16,29 @@ export const campaignFormHandler = (event, formValues, setFormValues) => {
             if (ele <= formValues.numberOfVendors) {
                 newvendorsList[ele] = formValues.vendorsList[ele];
             } else {
-                newvendorsList[ele] = { id: "", amount: 0 };
+                newvendorsList[ele] = { name: "", id: "", amount: null };
             }
         });
         setFormValues({
             ...formValues,
             numberOfVendors: value,
             vendorsList: newvendorsList,
+        });
+        return;
+    }
+
+    //  Handling Vendor List Amount
+    if (name.startsWith("vendor") && name.endsWith("name")) {
+        const vendorNum = name[6];
+        setFormValues({
+            ...formValues,
+            vendorsList: {
+                ...formValues.vendorsList,
+                [vendorNum]: {
+                    ...formValues.vendorsList[vendorNum],
+                    name: value,
+                },
+            },
         });
         return;
     }

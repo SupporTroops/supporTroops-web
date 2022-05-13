@@ -21,7 +21,7 @@ function CreateCampaignStepFour({ formValues }) {
                 <div className={classes.details}>
                     <Typography variant="h6">Campaign Details</Typography>
                     <Typography variant="body1">
-                        {formValues.campaignDetails}
+                        {formValues.campaignDescription}
                     </Typography>
                 </div>
                 <div className={classes.details}>

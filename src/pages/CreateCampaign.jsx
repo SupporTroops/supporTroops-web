@@ -8,28 +8,28 @@ import {
 } from "@mui/material";
 import { createUseStyles } from "react-jss";
 
-import CreateCampaignStepOne from "../components/function/createCampaign/CreateCampaignStepOne";
-import FormButtonGroup from "../components/function/createCampaign/FormButtonGroup";
-import CreateCampaignStepTwo from "../components/function/createCampaign/CreateCampaignStepTwo";
 import { campaignFormHandler } from "../utils/functions";
+import CreateCampaignStepOne from "../components/function/createCampaign/CreateCampaignStepOne";
+import CreateCampaignStepTwo from "../components/function/createCampaign/CreateCampaignStepTwo";
 import CreateCampaignStepThree from "../components/function/createCampaign/CreateCampaignStepThree";
 import CreateCampaignStepFour from "../components/function/createCampaign/CreateCampaignStepFour";
+import FormButtonGroup from "../components/function/createCampaign/FormButtonGroup";
 
 const steps = ["Campaign Details", "Host Details", "Vendor Details", "Review"];
 const defaultFormValues = {
     campaignName: "",
-    campaignDetails: "",
+    campaignDescription: "",
     campaignCause: "nonProfit",
     coverImage: null,
     numberOfVendors: 2,
     vendorsList: {
-        1: { id: "", amount: 0 },
-        2: { id: "", amount: 0 },
+        1: { name: "", id: "", amount: null },
+        2: { name: "", id: "", amount: null },
     },
     hostName: "",
     organisation: "",
     roleInOrganisation: "",
-    amountToRaise: 0,
+    amountToRaise: null,
 };
 
 function CreateCampaign(props) {
@@ -39,15 +39,6 @@ function CreateCampaign(props) {
 
     const handleChange = (event) => {
         campaignFormHandler(event, formValues, setFormValues);
-    };
-
-    // Stepper Handler
-    const handleStepButtons = (event) => {
-        if (event.target.textContent === "next") {
-            setActiveStep((prev) => prev + 1);
-        } else if (event.target.textContent === "back") {
-            setActiveStep((prev) => prev - 1);
-        }
     };
 
     // Active Step Checker
@@ -99,7 +90,7 @@ function CreateCampaign(props) {
 
                         <FormButtonGroup
                             checkActiveStep={checkActiveStep}
-                            handleStepButtons={handleStepButtons}
+                            setActiveStep={setActiveStep}
                         />
                     </FormControl>
                 </div>

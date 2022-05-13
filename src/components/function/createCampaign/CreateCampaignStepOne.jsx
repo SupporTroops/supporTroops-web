@@ -19,8 +19,8 @@ function CreateCampaignStepOne({ formValues, handleChange }) {
             <TextareaAutosize
                 minRows={10}
                 placeholder="Campaign Details"
-                name="campaignDetails"
-                value={formValues.campaignDetails}
+                name="campaignDescription"
+                value={formValues.campaignDescription}
                 onChange={handleChange}
                 className={classes.textArea}
             />

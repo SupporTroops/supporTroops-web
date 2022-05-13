@@ -2,8 +2,18 @@ import React from "react";
 import { createUseStyles } from "react-jss";
 import ButtonCustom from "../../custom/ButtonCustom";
 
-function FormButtonGroup({ checkActiveStep, handleStepButtons }) {
+function FormButtonGroup({ checkActiveStep, setActiveStep }) {
     const classes = useStyles();
+
+    // Stepper Handler
+    const handleStepButtons = (event) => {
+        if (event.target.textContent === "next") {
+            setActiveStep((prev) => prev + 1);
+        } else if (event.target.textContent === "back") {
+            setActiveStep((prev) => prev - 1);
+        }
+    };
+
     return (
         <div className={classes.ButtonGroup}>
             <ButtonCustom

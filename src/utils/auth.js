@@ -32,6 +32,11 @@ const auth = {
             return AUTH_TOKEN;
         }
     },
+    getUserId: () => {
+        let userId;
+        // Get User ID from token
+        return userId;
+    },
 };
 
 export default auth;

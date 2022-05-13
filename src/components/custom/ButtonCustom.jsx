@@ -15,9 +15,9 @@ function ButtonCustom({
 }) {
     return (
         <Button
+            style={style}
             sx={{
                 ...styles.button,
-                ...style,
                 paddingRight: horizontalPadding,
                 paddingLeft: horizontalPadding,
             }}

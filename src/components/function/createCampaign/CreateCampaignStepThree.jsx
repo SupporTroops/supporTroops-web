@@ -27,28 +27,42 @@ function CreateCampaignStepTwo({ formValues, handleChange }) {
             </Typography>
             {range(formValues.numberOfVendors).map((element) => {
                 return (
-                    <div
-                        key={element}
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                        }}
-                    >
+                    <React.Fragment key={element}>
+                        <Typography
+                            variant="h6"
+                            style={{ marginBottom: 10, fontWeight: "400" }}
+                        >
+                            Vendor {element} Details:
+                        </Typography>
                         <TextFieldCustom
-                            label={"Vendor " + element + " ID"}
-                            name={"vendor" + element + "id"}
-                            value={formValues.vendorsList[element].id}
+                            label="Name"
+                            name={"vendor" + element + "name"}
+                            value={formValues.vendorsList[element].name}
                             onChange={handleChange}
-                            style={{ width: "100%", marginRight: 20 }}
                         />
-                        <TextFieldCustom
-                            label={"Vendor " + element + " Amount"}
-                            name={"vendor" + element + "amount"}
-                            value={formValues.vendorsList[element].amount}
-                            onChange={handleChange}
-                            style={{ width: "100%" }}
-                        />
-                    </div>
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                            }}
+                        >
+                            <TextFieldCustom
+                                label="ID"
+                                name={"vendor" + element + "id"}
+                                value={formValues.vendorsList[element].id}
+                                onChange={handleChange}
+                                style={{ width: "100%", marginRight: 20 }}
+                            />
+                            <TextFieldCustom
+                                label="Amount"
+                                name={"vendor" + element + "amount"}
+                                value={formValues.vendorsList[element].amount}
+                                onChange={handleChange}
+                                type="number"
+                                style={{ width: "100%" }}
+                            />
+                        </div>
+                    </React.Fragment>
                 );
             })}
         </React.Fragment>
