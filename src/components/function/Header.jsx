@@ -11,6 +11,7 @@ import theme from "../../config/theme";
 import colors from "../../config/colors";
 
 import auth from "../../utils/auth";
+import { useNavigate } from "react-router-dom";
 
 const HEADER_NAV_LIST = [
     {
@@ -42,6 +43,22 @@ const HEADER_NAV_LIST = [
 function Header(props) {
     const classes = useStyles();
     const [openDrawer, setOpenDrawer] = useState(false);
+    const navigate = useNavigate();
+
+    const handleClick = (event) => {
+        const buttonName = event.target.textContent;
+        if (buttonName === "ongoing campaigns") {
+            navigate("/campaigns_list");
+        } else if (buttonName === "our story") {
+            navigate("/about_us");
+        } else if (buttonName === "create account") {
+            navigate("/signup");
+        } else if (buttonName === "sign in") {
+            navigate("/login");
+        } else if (buttonName === "sign out") {
+            auth.signOut();
+        }
+    };
 
     const toggleDrawer = (open) => (event) => {
         if (
@@ -58,34 +75,37 @@ function Header(props) {
             <Toolbar sx={{ ...styles.navBarContainer }}>
                 <img src={logo} alt="SupporTroops Logo" />
                 <div className={classes.navLinks}>
-                    <ButtonCustom style={styles.button}>
-                        Ongoing Campaigns
+                    <ButtonCustom style={styles.button} onClick={handleClick}>
+                        ongoing campaigns
                     </ButtonCustom>
-                    <ButtonCustom style={styles.button}>Our Story</ButtonCustom>
+                    <ButtonCustom style={styles.button} onClick={handleClick}>
+                        our story
+                    </ButtonCustom>
                     <ButtonCustom
                         style={styles.button}
                         variant="outlined"
-                        onClick={HEADER_NAV_LIST[1].onClick}
+                        onClick={handleClick}
                         className={classes.signIn}
                     >
-                        Sign In
+                        sign in
                     </ButtonCustom>
                     <ButtonCustom
                         style={styles.button}
                         variant="contained"
                         disableElevation
                         className={classes.createAccount}
+                        onClick={handleClick}
                     >
-                        Create Account
+                        create account
                     </ButtonCustom>
                     <ButtonCustom
                         style={styles.button}
                         variant="contained"
                         disableElevation
                         className={classes.signOut}
-                        onClick={auth.signOut}
+                        onClick={handleClick}
                     >
-                        Sign Out
+                        sign out
                     </ButtonCustom>
                 </div>
                 <div className={classes.menuButton}>

@@ -33,6 +33,8 @@ export const getCampaignDetails = (campaignId) => {
 
     // Parse image from server
 
+    // Store in local storage
+
     return {
         coverImage:
             "https://www.bailinson-oleary.com/wp-content/uploads/2019/08/Child-Support.jpg",

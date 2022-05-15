@@ -6,7 +6,7 @@ import { range } from "../../../utils/functions";
 
 function VendorDetails({ style, numberOfVendors, vendorsList }) {
     const classes = useStyles();
-    let totalVendorsAmount = 0;
+
     return (
         <Card
             variant="outlined"
@@ -42,7 +42,6 @@ function VendorDetails({ style, numberOfVendors, vendorsList }) {
                         </div>
                     ))}
                 </div>
-                {console.log(totalVendorsAmount)}
             </CardContent>
         </Card>
     );

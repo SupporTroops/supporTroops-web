@@ -12,6 +12,8 @@ function TextFieldCustom({
     type,
     required,
     helperText,
+    doNotApplyMarginBottom,
+    ...rest
 }) {
     const classes = useStyles();
     return (
@@ -21,13 +23,12 @@ function TextFieldCustom({
             name={name}
             value={value}
             onChange={onChange}
-            className={classes.textField}
+            className={doNotApplyMarginBottom === true ? "" : classes.textField}
             required={required}
             type={type}
             helperText={helperText}
-            style={{
-                ...style,
-            }}
+            style={style}
+            {...rest}
         />
     );
 }

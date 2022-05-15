@@ -12,6 +12,9 @@ function ButtonCustom({
     disableElevation = true,
     horizontalPadding,
     component,
+    startIcon,
+    endIcon,
+    ...rest
 }) {
     return (
         <Button
@@ -28,6 +31,9 @@ function ButtonCustom({
             onClick={onClick}
             className={className}
             component={component}
+            startIcon={startIcon}
+            endIcon={endIcon}
+            {...rest}
         >
             {children}
         </Button>
