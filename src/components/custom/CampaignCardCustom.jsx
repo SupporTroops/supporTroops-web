@@ -1,19 +1,25 @@
 import { Card, CardActions, CardContent, Typography } from "@mui/material";
 import React from "react";
 import { createUseStyles } from "react-jss";
+import { useNavigate } from "react-router-dom";
 import ButtonCustom from "./ButtonCustom";
 import LinearProgressCustom from "./LinearProgressCustom";
 
 function CampaignCardCustom({
+    campaignId,
     campaignName,
     campaignDescription,
     host,
     organisation,
     progress,
     style,
-    onClick,
 }) {
+    const navigate = useNavigate();
     const classes = useStyles();
+    const handleClick = (event) => {
+        navigate(`/campaign_details/${campaignId}`);
+    };
+
     return (
         <Card raised className={classes.card} style={style}>
             <CardContent>
@@ -36,7 +42,7 @@ function CampaignCardCustom({
                     variant="outlined"
                     style={{ marginLeft: "auto" }}
                     horizontalPadding={4}
-                    onClick={onClick}
+                    onClick={handleClick}
                 >
                     Details
                 </ButtonCustom>

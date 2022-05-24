@@ -12,14 +12,14 @@ function GetCampaigns(props) {
         <div className={classes.cardContainer}>
             {campaigns.map((campaign) => (
                 <CampaignCardCustom
-                    key={campaign.name}
+                    key={campaign.id}
+                    campaignId={campaign.id}
                     campaignName={campaign.name}
                     campaignDescription={campaign.campaignDescription}
                     host={campaign.host}
                     organisation={campaign.organisation}
                     progress={campaign.progress}
                     style={{ marginBottom: 50 }}
-                    onClick={() => console.log("Card Clicked")}
                 />
             ))}
         </div>

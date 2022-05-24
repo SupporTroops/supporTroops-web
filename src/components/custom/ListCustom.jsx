@@ -22,9 +22,15 @@ import { Link } from "react-router-dom";
  * }
  */
 
-function ListCustom({ list, clickableButtons = false }) {
+function ListCustom({
+    list,
+    clickableButtons = false,
+    style,
+    primaryTypographyProps,
+    secondaryTypographyProps,
+}) {
     return (
-        <List style={{ width: 270 }}>
+        <List style={{ width: 270, ...style }}>
             {list.map((item) => {
                 return (
                     <React.Fragment key={item.title}>
@@ -40,15 +46,24 @@ function ListCustom({ list, clickableButtons = false }) {
                                 to={item.to ? item.to : "/"}
                             >
                                 {item.icon && (
-                                    <ListItemIcon style={{ minWidth: 45 }}>
+                                    <ListItemIcon
+                                        style={{
+                                            minWidth: 45,
+                                            marginRight: "2rem",
+                                        }}
+                                    >
                                         {item.icon}
                                     </ListItemIcon>
                                 )}
                                 <ListItemText
                                     primary={item.title}
+                                    primaryTypographyProps={
+                                        primaryTypographyProps
+                                    }
                                     secondary={item.subTitle}
                                     secondaryTypographyProps={{
                                         color: item.subTitleColor,
+                                        ...secondaryTypographyProps,
                                     }}
                                 />
                             </ListItemButton>
@@ -61,15 +76,24 @@ function ListCustom({ list, clickableButtons = false }) {
                                 divider={item.divider}
                             >
                                 {item.icon && (
-                                    <ListItemIcon style={{ minWidth: 45 }}>
+                                    <ListItemIcon
+                                        style={{
+                                            minWidth: 45,
+                                            marginRight: "2rem",
+                                        }}
+                                    >
                                         {item.icon}
                                     </ListItemIcon>
                                 )}
                                 <ListItemText
                                     primary={item.title}
+                                    primaryTypographyProps={
+                                        primaryTypographyProps
+                                    }
                                     secondary={item.subTitle}
                                     secondaryTypographyProps={{
                                         color: item.subTitleColor,
+                                        ...secondaryTypographyProps,
                                     }}
                                 />
                             </ListItem>

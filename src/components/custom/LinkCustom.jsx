@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { createUseStyles } from "react-jss";
 
-function LinkCustom({ children, to = "/", style, ...rest }) {
+function LinkCustom({ children, to = "/error_page", style, ...rest }) {
     const classes = useStyles();
     return (
         <Link className={classes.link} to={to} style={style} {...rest}>

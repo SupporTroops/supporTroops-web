@@ -27,6 +27,10 @@ function DonationDetails({
         }
     };
 
+    const handleReturn = () => {
+        navigate(-1);
+    };
+
     return (
         <Card
             raised
@@ -44,6 +48,7 @@ function DonationDetails({
                     horizontalPadding={3}
                     startIcon={<ChevronLeft />}
                     style={{ marginBottom: "1.5rem" }}
+                    onClick={handleReturn}
                 >
                     Return to Campaign
                 </ButtonCustom>

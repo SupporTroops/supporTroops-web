@@ -16,7 +16,7 @@ function Cover(props) {
                 <Typography variant="h5" className={classes.subTitle}>
                     Transforming the classical crowdfunding with{" "}
                     <span className={classes.accentText}>CRYPTO</span>, for the
-                    new India{" "}
+                    new{" "}
                     <span className={classes.accentText}>DIGITAL INDIA</span>
                 </Typography>
                 <img src={CoverImage} alt="" className={classes.image} />
@@ -32,7 +32,7 @@ const useStyles = createUseStyles({
     image: {
         height: "25rem",
         marginRight: "3rem",
-        marginTop: "2rem",
+        marginTop: "8rem",
     },
     flexContainer: {
         display: "flex",

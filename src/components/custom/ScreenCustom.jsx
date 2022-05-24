@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createUseStyles } from "react-jss";
+import { useLocation } from "react-router-dom";
 import Footer from "../function/Footer";
 import Header from "../function/Header";
 
 function ScreenCustom({ children }) {
     const classes = useStyles();
+    const location = useLocation();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [location]);
     return (
         <div className={classes.screen}>
             <Header />
