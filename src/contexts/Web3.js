@@ -106,8 +106,7 @@ export function Updater() {
                     if (state.netId === 0) {
                         updateNetId({ netId });
                     } else if (netId !== state.netId) {
-                        console.log("from net id")
-                        window.location.reload();
+                        window.location.reload()
                     }
                 }
             });
