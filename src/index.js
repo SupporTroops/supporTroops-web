@@ -4,12 +4,21 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import { Provider as Web3Provider, Updater as Web3Updater } from "./contexts/Web3";
+import { Provider as CrowdFundProvider, Updater as CrowdFundUpdater } from './contexts/CrowdFund';
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
         <BrowserRouter>
-            <App />
+            <Web3Provider>
+                <CrowdFundProvider>
+                    <App />
+                    <Web3Updater />
+                    <CrowdFundUpdater />
+                </CrowdFundProvider>
+            </Web3Provider>
         </BrowserRouter>
     </React.StrictMode>
 );
