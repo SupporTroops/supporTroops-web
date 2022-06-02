@@ -5,7 +5,7 @@ import { createUseStyles } from "react-jss";
 import CoverImage from "../assets/login_cover.png";
 import LoginForm from "../components/function/LoginForm";
 
-function Login(props) {
+function Login({ setIsLoggedIn }) {
     const classes = useStyles();
     return (
         <React.Fragment>
@@ -14,7 +14,7 @@ function Login(props) {
             </Typography>
             <div className={classes.container}>
                 <div className={classes.loginFormContainer}>
-                    <LoginForm />
+                    <LoginForm setIsLoggedIn={setIsLoggedIn} />
                 </div>
                 <img
                     src={CoverImage}

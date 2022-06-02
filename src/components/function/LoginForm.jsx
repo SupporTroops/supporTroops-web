@@ -1,6 +1,13 @@
-import { FormControl, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {
+    Alert,
+    Backdrop,
+    CircularProgress,
+    Collapse,
+    FormControl,
+    Typography,
+} from "@mui/material";
 
 import auth from "../../utils/auth";
 
@@ -12,9 +19,17 @@ const initialLoginDetails = {
     password: "",
 };
 
-function LoginForm(props) {
+const initialAlertDetails = {
+    open: false,
+    status: "error",
+    message: "",
+};
+
+function LoginForm({ setIsLoggedIn }) {
     const navigate = useNavigate();
     const [loginDetails, setLoginDetails] = useState(initialLoginDetails);
+    const [alert, setAlert] = useState(initialAlertDetails);
+    const [backdropOpen, setBackdropOpen] = useState(false);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -24,20 +39,42 @@ function LoginForm(props) {
         });
     };
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const handleLogin = async (event) => {
+        setBackdropOpen(true);
         const response = await auth.signIn(loginDetails);
-        if (!response) {
-            // Raise error
-            console.log("error");
-        } else {
-            navigate("/dashboard");
-            console.log("success");
-        }
+        setTimeout(() => {
+            setAlert({
+                ...response,
+                open: true,
+            });
+            if (response.status === "success") {
+                setTimeout(() => {
+                    navigate("/dashboard");
+                    setIsLoggedIn(true);
+                }, 2000);
+            }
+        }, 2000);
     };
 
+    useEffect(() => {
+        setTimeout(() => {
+            setBackdropOpen(false);
+        }, 2000);
+    }, [backdropOpen]);
+
+    useEffect(() => {
+        if (!alert.open) {
+            setTimeout(() => {
+                setAlert({
+                    ...alert,
+                    open: false,
+                });
+            }, 5000);
+        }
+    }, [alert]);
+
     return (
-        <form onSubmit={handleSubmit}>
+        <form>
             <FormControl style={{ width: "100%" }}>
                 <TextFieldCustom
                     label="Email"
@@ -57,7 +94,7 @@ function LoginForm(props) {
                 />
                 <ButtonCustom
                     variant="contained"
-                    type="submit"
+                    onClick={handleLogin}
                     horizontalPadding={4}
                     style={{ alignSelf: "flex-start" }}
                 >
@@ -69,6 +106,19 @@ function LoginForm(props) {
                         Sign Up
                     </Link>
                 </Typography>
+                <Collapse in={alert.open}>
+                    <Alert sx={{ marginTop: "2rem" }} severity={alert.status}>
+                        {alert.message}
+                    </Alert>
+                </Collapse>
+                <Backdrop
+                    sx={{
+                        zIndex: (theme) => theme.zIndex.drawer + 1,
+                    }}
+                    open={backdropOpen}
+                >
+                    <CircularProgress color="inherit" />
+                </Backdrop>
             </FormControl>
         </form>
     );

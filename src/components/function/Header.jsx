@@ -1,49 +1,27 @@
-import { MenuRounded } from "@mui/icons-material";
-import { AppBar, Toolbar, Drawer } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { createUseStyles } from "react-jss";
+import { MenuRounded } from "@mui/icons-material";
+import {
+    AppBar,
+    Toolbar,
+    Drawer,
+    CircularProgress,
+    Backdrop,
+} from "@mui/material";
 
 import ButtonCustom from "../custom/ButtonCustom";
 import ListCustom from "../custom/ListCustom";
 
 import logo from "../../assets/logo.png";
-import theme from "../../config/theme";
-import colors from "../../config/colors";
-
 import auth from "../../utils/auth";
-import { useNavigate } from "react-router-dom";
+import { HEADER_NAV_LIST } from "../../utils/data";
 
-const HEADER_NAV_LIST = [
-    {
-        title: "Create Account",
-        subTitle: "Come Join us in our Campaigns",
-        backgroundColor: theme.palette.primary.main,
-        color: colors.white,
-        subTitleColor: theme.palette.grey[300],
-        divider: false,
-    },
-    {
-        title: "Sign In",
-        subTitle: "See how your Campaigns are doing",
-        backgroundColor: theme.palette.secondary.main,
-        color: colors.white,
-        subTitleColor: theme.palette.grey[300],
-        onClick: auth.signIn,
-    },
-    {
-        title: "Ongoing Campaigns",
-        subTitle: "Find what you came for or maybe just explore!",
-    },
-    {
-        title: "Our Story",
-        subTitle: "Who are we and What's our goal?",
-    },
-];
-
-function Header(props) {
+function Header({ isLoggedIn, setIsLoggedIn }) {
     const classes = useStyles();
-    const [openDrawer, setOpenDrawer] = useState(false);
     const navigate = useNavigate();
+    const [openDrawer, setOpenDrawer] = useState(false);
+    const [backdropOpen, setBackdropOpen] = useState(false);
 
     const handleClick = (event) => {
         const buttonName = event.target.textContent;
@@ -55,10 +33,22 @@ function Header(props) {
             navigate("/signup");
         } else if (buttonName === "sign in") {
             navigate("/login");
+        } else if (buttonName === "dashboard") {
+            navigate("/dashboard");
         } else if (buttonName === "sign out") {
-            auth.signOut();
+            setBackdropOpen(true);
+            setTimeout(() => {
+                auth.signOut();
+                setIsLoggedIn(false);
+            }, 2000);
         }
     };
+
+    useEffect(() => {
+        setTimeout(() => {
+            setBackdropOpen(false);
+        }, 2000);
+    }, [backdropOpen]);
 
     const toggleDrawer = (open) => (event) => {
         if (
@@ -73,40 +63,60 @@ function Header(props) {
     return (
         <AppBar position="relative" color="transparent" elevation={0}>
             <Toolbar sx={{ ...styles.navBarContainer }}>
-                <img src={logo} alt="SupporTroops Logo" />
+                <Link to="/">
+                    <img src={logo} alt="SupporTroops Logo" />
+                </Link>
                 <div className={classes.navLinks}>
-                    <ButtonCustom style={styles.button} onClick={handleClick}>
+                    <ButtonCustom
+                        className={classes.button}
+                        onClick={handleClick}
+                    >
                         ongoing campaigns
                     </ButtonCustom>
-                    <ButtonCustom style={styles.button} onClick={handleClick}>
+                    <ButtonCustom
+                        className={classes.button}
+                        onClick={handleClick}
+                    >
                         our story
                     </ButtonCustom>
-                    <ButtonCustom
-                        style={styles.button}
-                        variant="outlined"
-                        onClick={handleClick}
-                        className={classes.signIn}
-                    >
-                        sign in
-                    </ButtonCustom>
-                    <ButtonCustom
-                        style={styles.button}
-                        variant="contained"
-                        disableElevation
-                        className={classes.createAccount}
-                        onClick={handleClick}
-                    >
-                        create account
-                    </ButtonCustom>
-                    <ButtonCustom
-                        style={styles.button}
-                        variant="contained"
-                        disableElevation
-                        className={classes.signOut}
-                        onClick={handleClick}
-                    >
-                        sign out
-                    </ButtonCustom>
+                    {!isLoggedIn && (
+                        <ButtonCustom
+                            variant="outlined"
+                            onClick={handleClick}
+                            className={classes.button}
+                        >
+                            sign in
+                        </ButtonCustom>
+                    )}
+                    {!isLoggedIn && (
+                        <ButtonCustom
+                            variant="contained"
+                            disableElevation
+                            className={classes.button}
+                            onClick={handleClick}
+                        >
+                            create account
+                        </ButtonCustom>
+                    )}
+                    {isLoggedIn && (
+                        <ButtonCustom
+                            variant="outlined"
+                            onClick={handleClick}
+                            className={classes.button}
+                        >
+                            dashboard
+                        </ButtonCustom>
+                    )}
+                    {isLoggedIn && (
+                        <ButtonCustom
+                            variant="contained"
+                            disableElevation
+                            className={classes.button}
+                            onClick={handleClick}
+                        >
+                            sign out
+                        </ButtonCustom>
+                    )}
                 </div>
                 <div className={classes.menuButton}>
                     <MenuRounded
@@ -123,6 +133,14 @@ function Header(props) {
                 <div className={classes.emptySpace}></div>
                 {<ListCustom clickableButtons list={HEADER_NAV_LIST} />}
             </Drawer>
+            <Backdrop
+                sx={{
+                    zIndex: (theme) => theme.zIndex.drawer + 1,
+                }}
+                open={backdropOpen}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
         </AppBar>
     );
 }
@@ -139,14 +157,8 @@ const useStyles = createUseStyles({
             display: "block",
         },
     },
-    createAccount: {
-        display: auth.isAuthenticated() ? "none !important" : "",
-    },
-    signIn: {
-        display: auth.isAuthenticated() ? "none !important" : "",
-    },
-    signOut: {
-        display: auth.isAuthenticated() ? "" : "none !important",
+    button: {
+        marginRight: "1rem !important",
     },
     emptySpace: {
         height: 20,
@@ -159,9 +171,6 @@ const styles = {
         justifyContent: "space-between",
         alignItem: "center",
         height: 90,
-    },
-    button: {
-        marginRight: "1rem",
     },
 };
 

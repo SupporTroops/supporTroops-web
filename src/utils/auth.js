@@ -1,3 +1,4 @@
+import Joi from "joi";
 import connection from "./connection";
 
 let IS_LOGGED_IN = false;
@@ -9,35 +10,99 @@ const storeToken = (token) => {
     AUTH_TOKEN = token;
 };
 
+// Schemas
+const loginSchema = Joi.object({
+    email: Joi.string()
+        .required()
+        .email({ tlds: { allow: false } })
+        .messages({
+            "string.email": "Email is not Valid",
+            "string.required": "Email is required",
+            "string.empty": "Email is required",
+        }),
+    password: Joi.string().required().min(3).messages({
+        "string.required": "Password is required",
+        "string.empty": "Password is required",
+        "string.min": "Password should be at least {#limit} characters long",
+    }),
+});
+
+const signupSchema = Joi.object({
+    name: Joi.string().required().messages({
+        "string.required": "Name is required",
+        "string.empty": "Name is required",
+    }),
+    email: Joi.string()
+        .required()
+        .email({ tlds: { allow: false } })
+        .messages({
+            "string.email": "Email is not Valid",
+            "string.required": "Email is required",
+            "string.empty": "Email is required",
+        }),
+    phone: Joi.string()
+        .required()
+        .length(10)
+        .pattern(/^[0-9]+$/)
+        .messages({
+            "string.pattern.base": `Phone number must only contain digits.`,
+            "string.required": "Phone number is required",
+            "string.empty": "Phone number is required",
+            "string.length": "Phone number should be have exactly 10 digits",
+        })
+        .required(),
+    password: Joi.string().required().min(3).messages({
+        "string.required": "Password is required",
+        "string.empty": "Password is required",
+        "string.min": "Password should be at least {#limit} characters long",
+    }),
+    confirmPassword: Joi.valid(Joi.ref("password")).messages({
+        "any.only": "Passwords do not match",
+    }),
+});
+
+// API Object
 const auth = {
     signIn: async (loginDetails) => {
-        // Validation First
+        // Validation
+        const { error } = loginSchema.validate(loginDetails);
+        if (error) {
+            return {
+                status: "error",
+                message: error.message,
+            };
+        }
 
         // Fetch API
-        const auth_token = await connection.login(loginDetails);
-        if (!auth_token) return false;
+        const response = await connection.login(loginDetails);
 
         // Success response
-        storeToken(auth_token);
-        return true;
+        if (response.status === "success") storeToken(response.token);
+        return response;
+    },
+
+    signUp: async (signupDetails) => {
+        // Validation
+        const { error } = signupSchema.validate(signupDetails);
+        if (error) {
+            return {
+                status: "error",
+                message: error.message,
+            };
+        }
+
+        // Fetch API
+        const response = await connection.createAccount(signupDetails);
+
+        // Success response
+        if (response.status === "success") storeToken(response.token);
+        return response;
     },
 
     signOut: () => {
         sessionStorage.removeItem("AUTH");
         IS_LOGGED_IN = false;
         AUTH_TOKEN = null;
-    },
-
-    signUp: async (signupDetails) => {
-        // Validation First
-
-        // Fetch API
-        const auth_token = await connection.signup(signupDetails);
-        if (!auth_token) return false;
-
-        // Success response
-        storeToken(auth_token);
-        return true;
     },
 
     isAuthenticated: () => {

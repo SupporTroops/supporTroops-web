@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import Footer from "../function/Footer";
 import Header from "../function/Header";
 
-function ScreenCustom({ children }) {
+function ScreenCustom({ children, isLoggedIn, setIsLoggedIn }) {
     const classes = useStyles();
     const location = useLocation();
 
@@ -13,7 +13,7 @@ function ScreenCustom({ children }) {
     }, [location]);
     return (
         <div className={classes.screen}>
-            <Header />
+            <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
             <div className={classes.container}>{children}</div>
             <Footer />
         </div>
