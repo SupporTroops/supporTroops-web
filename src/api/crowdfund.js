@@ -66,10 +66,10 @@ export async function getCampaigns(web3, account) {
   }
 }
 
-export async function createCampaign(web3, account) {
+export async function createCampaign(web3, account, details) {
   CrowdFund.setProvider(web3.currentProvider);
   const crowdfund = await CrowdFund.deployed();
-  let newCampaign = await crowdfund.create_campaign("campaign name", "campaign description", true, ["0xDd2EDB40bb012182C057c23c7812058674F5232c"], [String(10 ** 18)], { from: account });
+  let newCampaign = await crowdfund.create_campaign(details.name, details.description, details.type, details.vendor_addresses, details.vendor_amounts, { from: account });
   newCampaign = newCampaign.logs[0].args;
   // return {
   // address: newCampaign["1"],
