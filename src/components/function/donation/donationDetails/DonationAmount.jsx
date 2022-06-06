@@ -1,10 +1,11 @@
-import React from "react";
-import { MenuItem, Select, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { InputAdornment, MenuItem, Select, Typography } from "@mui/material";
 import TextFieldCustom from "../../../custom/TextFieldCustom";
 import { createUseStyles } from "react-jss";
 
 function DonationAmount({ donationValue, handleChange }) {
     const classes = useStyles();
+
     return (
         <React.Fragment>
             <Typography
@@ -33,6 +34,11 @@ function DonationAmount({ donationValue, handleChange }) {
                     doNotApplyMarginBottom
                     style={{ width: "100%" }}
                     placeholder="Enter Amount"
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">GWei</InputAdornment>
+                        ),
+                    }}
                 />
             </div>
         </React.Fragment>
