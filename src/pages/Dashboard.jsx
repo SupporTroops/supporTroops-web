@@ -38,9 +38,10 @@ function Dashboard(props) {
         <React.Fragment>
             <Typography variant="h1">Dashboard</Typography>
             <div className={classes.buttonGroup}>
-                {!account ? <ButtonCustom onClick={handleMetamask} style={{ marginRight: '1rem' }} variant="contained">Connect to Metamask</ButtonCustom> : `${account} at ${Networks[netId]}`}
-                <ButtonCustom onClick={handleClick} variant="contained">Create Campaign</ButtonCustom>
+                {!account && <ButtonCustom onClick={handleMetamask} style={{ marginRight: '1rem' }} variant="contained">Connect to Metamask</ButtonCustom>}{/* : `${account} at ${Networks[netId]}`*/}
+                {account && <ButtonCustom onClick={handleClick} variant="contained">Create Campaign</ButtonCustom>}
             </div>
+            {!account && <div>To view campaigns connect to metamask</div>}
             <GetCampaigns />
         </React.Fragment>
     );

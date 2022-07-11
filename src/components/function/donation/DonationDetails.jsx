@@ -8,7 +8,9 @@ import TipDetails from "./donationDetails/TipDetails";
 import DonationAmount from "./donationDetails/DonationAmount";
 import DonationCampaignDetails from "./donationDetails/DonationCampaignDetails";
 import auth from "../../../utils/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { donateToCampaign } from "../../../api/crowdfund";
+import { useWeb3Context } from "../../../contexts/Web3";
 
 function DonationDetails({
     campaignName,
@@ -19,10 +21,15 @@ function DonationDetails({
     handleChange,
 }) {
     const navigate = useNavigate();
-    const handleClick = () => {
+    const { campaign_id } = useParams();
+    const { state: { web3, account } } = useWeb3Context();
+
+    const handleClick = async () => {
         if (!auth.isAuthenticated()) {
             navigate("/login");
         } else {
+            console.log(String(donationValue.amount) + String(10 ** 9).substring(1))
+            await donateToCampaign(web3, account, campaign_id, "ETH", String(donationValue.amount) + String(10 ** 9).substring(1));
             console.log("Payment Successfull");
         }
     };
@@ -62,17 +69,17 @@ function DonationDetails({
                     donationValue={donationValue}
                     handleChange={handleChange}
                 />
-                <TipDetails
+                {/* <TipDetails
                     donationValue={donationValue}
                     handleChange={handleChange}
-                />
+                /> */}
                 <ButtonCustom
                     variant="contained"
                     style={{ marginTop: "1.5rem" }}
                     horizontalPadding={3}
                     onClick={handleClick}
                 >
-                    Continue
+                    Donate
                 </ButtonCustom>
             </CardContent>
         </Card>

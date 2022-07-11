@@ -67,8 +67,9 @@ function App() {
                     />
 
                     {/* Other Routes */}
-                    <Route path="/about_us" element={<p>About Us Page</p>} />
-                    <Route path="/contact_us" element={<p>Contact Us</p>} />
+                    <Route path="/about_us" element={<div><br /><br /><p style={{ padding: "1rem", textAlign: "justify"}}>People always have been insecure about the risks crowdfunding platforms come with. The most common problems they face are most of the campaigns around the world are not regulated, the projects remain incomplete and some of the crowd funding campaigns turned out to be fraud. 
+To solve these problems, we came up with the solution as our project </p><p style={{ padding: "1rem", textAlign: "justify"}}>SupporTroops- A Crowdfunding Platform that facilitates donation over Cryptocurrency.</p></div>} />
+                    {/* <Route path="/contact_us" element={<p>Contact Us</p>} /> */}
                     <Route path="*" element={<Error />} />
                 </Routes>
             </ScreenCustom>

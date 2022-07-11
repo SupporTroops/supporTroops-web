@@ -44,14 +44,15 @@ function LoginForm({ setIsLoggedIn }) {
         const response = await auth.signIn(loginDetails);
         setTimeout(() => {
             setAlert({
-                ...response,
+                status: "Success",
+                message: "OK",
                 open: true,
             });
-            if (response.status === "success") {
-                setTimeout(() => {
+            if (response) {
+                // setTimeout(() => {
                     navigate("/dashboard");
                     setIsLoggedIn(true);
-                }, 2000);
+                // }, 2000);
             }
         }, 2000);
     };

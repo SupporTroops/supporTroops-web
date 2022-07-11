@@ -11,9 +11,9 @@ function DonationCampaignDetails({
     const classes = useStyles();
     return (
         <div style={{ display: "flex", marginTop: "1rem" }}>
-            <div className={classes.coverImageContainer}>
+            {/* <div className={classes.coverImageContainer}>
                 <img src={coverImage} alt="" />
-            </div>
+            </div> */}
             <div style={{ marginTop: "1rem" }}>
                 <Typography variant="h6" style={{ display: "inline" }}>
                     Donating to{" "}
@@ -28,8 +28,7 @@ function DonationCampaignDetails({
                     {campaignName}
                 </Typography>
                 <Typography>
-                    Your donation will supoort the cause of <b>{organiser}</b>{" "}
-                    from <b>{organisation}</b>
+                    Your donation will go to this address <b>{organiser}</b>{" "}
                 </Typography>
             </div>
         </div>

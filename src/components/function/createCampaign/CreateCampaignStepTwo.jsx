@@ -5,25 +5,25 @@ function CreateCampaignStepThree({ formValues, handleChange }) {
     return (
         <React.Fragment>
             <TextFieldCustom
-                label="Host Name"
+                label="Owner Name"
                 name="hostName"
                 value={formValues.hostName}
                 onChange={handleChange}
             />
-            <TextFieldCustom
+            {/* <TextFieldCustom
                 label="Organisation"
                 name="organisation"
                 value={formValues.organisation}
                 onChange={handleChange}
-            />
-            <TextFieldCustom
+            /> */}
+            {/* <TextFieldCustom
                 label="Role in Organisation"
                 name="roleInOrganisation"
                 value={formValues.roleInOrganisation}
                 onChange={handleChange}
-            />
+            /> */}
             <TextFieldCustom
-                label="Amount to Raise (Rs.)"
+                label="Amount to Raise (DAI)"
                 name="amountToRaise"
                 value={formValues.amountToRaise}
                 onChange={handleChange}

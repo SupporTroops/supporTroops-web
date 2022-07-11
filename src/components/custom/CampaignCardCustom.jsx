@@ -36,7 +36,7 @@ function CampaignCardCustom({
             </CardContent>
             <CardActions style={{ padding: 16 }}>
                 <Typography variant="h6">
-                    By {host} from {organisation}
+                    By {host}{/* from {organisation} */}
                 </Typography>
                 <ButtonCustom
                     variant="outlined"

@@ -10,7 +10,7 @@ function CampaignAbout({ campaignDescription, campaignCause }) {
             <Typography variant="body1" style={{ marginBottom: "1rem" }}>
                 {campaignDescription}
             </Typography>
-            {campaignCause === "nonProfit" ? (
+            {campaignCause === false ? (
                 <Chip
                     label="Non Profit Campaign"
                     color="success"

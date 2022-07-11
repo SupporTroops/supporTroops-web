@@ -1,9 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Divider, Typography } from "@mui/material";
 import { createUseStyles } from "react-jss";
 import { useParams } from "react-router-dom";
-
-import { getCampaignDetails } from "../utils/campaignUtils";
 import HostDetails from "../components/function/campaignDetails/HostDetails";
 import CampaignAbout from "../components/function/campaignDetails/CampaignAbout";
 import VendorDetails from "../components/function/campaignDetails/VendorDetails";
@@ -11,23 +9,45 @@ import Progress from "../components/function/campaignDetails/Progress";
 import DonateButtonGroup from "../components/function/campaignDetails/DonateButtonGroup";
 import auth from "../utils/auth";
 import ButtonCustom from "../components/custom/ButtonCustom";
+import { useCrowdFundContext } from "../contexts/CrowdFund";
+import { unlockAccount } from '../api/web3';
+import { useWeb3Context } from '../contexts/Web3';
+
 
 function CampaignDetails(props) {
     const classes = useStyles();
 
     const { campaign_id } = useParams();
-    const campaignDetails = getCampaignDetails(campaign_id);
+    const { state: { campaigns } } = useCrowdFundContext();
+    const { state: { account, web3 }, updateAccount } = useWeb3Context();
+    const [campaignDetails, setCampaignDetails] = useState(campaigns.filter(c => c.address === campaign_id));
+
+    useEffect(() => {
+        if (!web3) {
+            const handleMeta = async () => {
+                try {
+                    const data = await unlockAccount();
+                    updateAccount(data);
+                } catch (err) {
+                    console.error(err);
+                }
+            };
+            handleMeta();
+        }
+        const campaign = campaigns.filter(c => c.address === campaign_id)[0];
+        setCampaignDetails(campaign);
+    }, [campaigns]);
 
     return (
         <React.Fragment>
-            <Typography variant="h1">{campaignDetails.campaignName}</Typography>
-            <div className={classes.coverImageContainer}>
+            <Typography variant="h1">{campaignDetails.name}</Typography>
+            {/* <div className={classes.coverImageContainer}>
                 <img src={campaignDetails.coverImage} alt="" />
-            </div>
+            </div> */}
             <div className={classes.details}>
                 <CampaignAbout
-                    campaignDescription={campaignDetails.campaignDescription}
-                    campaignCause={campaignDetails.campaignCause}
+                    campaignDescription={campaignDetails.description}
+                    campaignCause={campaignDetails.type}
                 />
                 <Divider
                     style={{
@@ -37,27 +57,27 @@ function CampaignDetails(props) {
                 <Progress
                     amountRaised={campaignDetails.amountRaised}
                     amountToRaise={campaignDetails.amountToRaise}
-                    progress={campaignDetails.progress}
+                    progress={(campaignDetails.amountRaised / campaignDetails.amountToRaise) *100}
                     style={{ marginTop: "2rem", padding: "0 0.2rem" }}
                 />
-                <DonateButtonGroup style={{ marginBottom: "2rem" }} />
+                <DonateButtonGroup progress={(campaignDetails.amountRaised / campaignDetails.amountToRaise) *100} style={{ marginBottom: "2rem" }} />
                 <Divider
                     style={{
                         backgroundColor: "rgba(0, 0, 0, 0.12)",
                     }}
                 />
                 <HostDetails
-                    hostName={campaignDetails.hostName}
+                    hostName={campaignDetails.owner}
                     organisation={campaignDetails.organisation}
                     roleInOrganisation={campaignDetails.roleInOrganisation}
                     style={{ marginTop: "2rem" }}
                 />
                 <VendorDetails
-                    numberOfVendors={campaignDetails.numberOfVendors}
-                    vendorsList={campaignDetails.vendorsList}
+                    numberOfVendors={0}
+                    vendorsList={campaignDetails.vendorList}
                     style={{ marginTop: "2rem" }}
                 />
-                {campaignDetails.hostId === auth.getUserId() && (
+                {campaignDetails.hostId === auth.getUserId() && ((campaignDetails.amountRaised / campaignDetails.amountToRaise) *100) < 100 && (
                     <ButtonCustom
                         variant="contained"
                         color="error"

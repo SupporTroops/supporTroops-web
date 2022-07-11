@@ -49,7 +49,7 @@ function CreateCampaignStepOne({ formValues, handleChange }) {
                     label="Profit"
                 />
             </RadioGroup>
-            <ButtonCustom
+            {/* <ButtonCustom
                 variant="outlined"
                 component="label"
                 style={{ marginTop: "2rem" }}
@@ -62,7 +62,7 @@ function CreateCampaignStepOne({ formValues, handleChange }) {
                     hidden
                     onChange={handleChange}
                 />
-            </ButtonCustom>
+            </ButtonCustom> */}
             {formValues.coverImage && (
                 <div className={classes.imageContainer}>
                     <img

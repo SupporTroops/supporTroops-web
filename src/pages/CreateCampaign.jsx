@@ -19,17 +19,17 @@ const steps = ["Campaign Details", "Host Details", "Vendor Details", "Review"];
 const defaultFormValues = {
     campaignName: "",
     campaignDescription: "",
-    campaignCause: "nonProfit",
+    campaignCause: false,
     coverImage: null,
     numberOfVendors: 2,
     vendorsList: {
-        1: { name: "", id: "", amount: null },
-        2: { name: "", id: "", amount: null },
+        1: { name: "", id: "", amount: 0 },
+        2: { name: "", id: "", amount: 0 },
     },
     hostName: "",
-    organisation: "",
-    roleInOrganisation: "",
-    amountToRaise: null,
+    // organisation: "",
+    // roleInOrganisation: "",
+    amountToRaise: 0,
 };
 
 function CreateCampaign(props) {
@@ -91,6 +91,7 @@ function CreateCampaign(props) {
                         <FormButtonGroup
                             checkActiveStep={checkActiveStep}
                             setActiveStep={setActiveStep}
+                            formValues={formValues}
                         />
                     </FormControl>
                 </div>

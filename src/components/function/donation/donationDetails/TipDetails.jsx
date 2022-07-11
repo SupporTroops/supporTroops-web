@@ -6,7 +6,7 @@ function TipDetails({ donationValue, handleChange }) {
         if (!donationValue.amount) return 0;
         else {
             const amount = Math.round((value / 100) * donationValue.amount, 2);
-            return `Rs.${amount} (${value}%)`;
+            return `${amount} ETH (${value}%)`;
         }
     };
 

@@ -19,9 +19,9 @@ const Footer = () => {
                     className={classes.toolbarContainer}
                 >
                     <LinkCustom to="/about_us">About&nbsp;Us</LinkCustom>
-                    <LinkCustom to="/contact_us">Contact&nbsp;Us</LinkCustom>
+                    {/* <LinkCustom to="/contact_us">Contact&nbsp;Us</LinkCustom>
                     <LinkCustom>What's&nbsp;New</LinkCustom>
-                    <LinkCustom>Feedback</LinkCustom>
+                    <LinkCustom>Feedback</LinkCustom> */}
                 </Toolbar>
                 <Toolbar
                     style={{ padding: 0 }}

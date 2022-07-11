@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import ButtonCustom from "../../custom/ButtonCustom";
 
-function DonateButtonGroup({ style }) {
+function DonateButtonGroup({ style, progress }) {
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -16,6 +16,7 @@ function DonateButtonGroup({ style }) {
                 horizontalPadding={3}
                 style={{ marginRight: "1rem" }}
                 onClick={handleClick}
+                disabled={progress >= 100 ? true : false}
             >
                 Donate Now
             </ButtonCustom>

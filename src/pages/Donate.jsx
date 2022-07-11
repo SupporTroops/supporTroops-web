@@ -1,21 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { createUseStyles } from "react-jss";
 
 import DonationBill from "../components/function/donation/DonationBill";
 import DonationDetails from "../components/function/donation/DonationDetails";
-import { getCampaignDetails } from "../utils/campaignUtils";
+import { useCrowdFundContext } from "../contexts/CrowdFund";
+import { unlockAccount } from '../api/web3';
+import { useWeb3Context } from '../contexts/Web3';
+
 
 const initialDonationValues = {
-    crypto: "ETH",
+    crypto: "GWei",
     amount: "",
-    tip: 40,
+    tip: 0,
 };
 
 function Donate(props) {
     const classes = useStyles();
     const { campaign_id } = useParams();
-    const campaignDetails = getCampaignDetails(campaign_id);
+    const { state: { campaigns } } = useCrowdFundContext();
+    const [campaignDetails, setCampaignDetails] = useState(campaigns.filter(c => c.address === campaign_id));
+    const { state: { account, web3 }, updateAccount } = useWeb3Context();
+    useEffect(() => {
+        if (!web3) {
+            const handleMeta = async () => {
+                try {
+                    const data = await unlockAccount();
+                    updateAccount(data);
+                } catch (err) {
+                    console.error(err);
+                }
+            };
+            handleMeta();
+        }
+        const campaign = campaigns.filter(c => c.address === campaign_id)[0];
+        console.log(campaign)
+        setCampaignDetails(campaign);
+    }, [campaigns]);
 
     const [donationValue, setDonationValue] = useState(initialDonationValues);
 
@@ -30,10 +51,10 @@ function Donate(props) {
     return (
         <div className={classes.container}>
             <DonationDetails
-                campaignName={campaignDetails.campaignName}
-                organiser={campaignDetails.hostName}
+                campaignName={campaignDetails.name}
+                organiser={campaignDetails.owner}
                 coverImage={campaignDetails.coverImage}
-                organisation={campaignDetails.organisation}
+                organisation={campaignDetails.owner}
                 donationValue={donationValue}
                 handleChange={handleChange}
             />

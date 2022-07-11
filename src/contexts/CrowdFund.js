@@ -230,7 +230,7 @@ export function Updater() {
   }, [web3]);
 
   useEffect(() => {
-    if (web3 && state["crowdfund_address"] != '') {
+    if (web3 && state["crowdfund_address"] !== '') {
       const address = state["crowdfund_address"]
       return subscribe(web3, address, (error, log) => {
         if (error) {

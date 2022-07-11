@@ -1,5 +1,8 @@
 export const getAllCampaignsDetails = () => {
     // Get campaign details from backend
+
+
+
     return [
         {
             id: "abcd",

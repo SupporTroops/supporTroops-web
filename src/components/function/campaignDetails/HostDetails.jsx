@@ -33,13 +33,13 @@ function HostDetails({ hostName, organisation, roleInOrganisation, style }) {
                     </Typography>
                     <Typography variant="subtitle2">{organisation}</Typography>
                 </div>
-                <ButtonCustom
+                {/* <ButtonCustom
                     variant="contained"
                     color="secondary"
                     style={{ marginTop: "auto", marginLeft: "auto" }}
                 >
                     Contact
-                </ButtonCustom>
+                </ButtonCustom> */}
             </CardActions>
         </Card>
     );

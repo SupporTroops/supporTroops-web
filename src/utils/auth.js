@@ -77,7 +77,7 @@ const auth = {
         const response = await connection.login(loginDetails);
 
         // Success response
-        if (response.status === "success") storeToken(response.token);
+        if (response) storeToken(response.token);
         return response;
     },
 

@@ -8,7 +8,7 @@ function Progress({ amountRaised, amountToRaise, progress, style }) {
     return (
         <div style={style}>
             <Typography variant="h5" style={{ display: "inline" }}>
-                <b>Rs.{amountRaised}</b>
+                <b>{amountRaised > amountToRaise ? amountToRaise : amountRaised} DAI</b>
             </Typography>
             <Typography
                 variant="body1"
@@ -18,7 +18,7 @@ function Progress({ amountRaised, amountToRaise, progress, style }) {
                     color: theme.palette.grey[600],
                 }}
             >
-                raised of <b>Rs.{amountToRaise}</b> goal
+                raised of <b>{amountToRaise} DAI</b> goal
             </Typography>
             <LinearProgressCustom value={progress} />
         </div>

@@ -12,8 +12,8 @@ function DonationBill({ donationValue }) {
     if (donationValue.amount) {
         let tipPercent = parseInt(donationValue.tip);
         donationAmount = parseInt(donationValue.amount);
-        tipAmount = Math.round((tipPercent / 100) * donationAmount);
-        totalAmount = Math.round(tipAmount + donationAmount);
+        tipAmount = 0; //Math.round((tipPercent / 100) * donationAmount);
+        totalAmount = (tipAmount + donationAmount);
     }
 
     return (
@@ -32,18 +32,18 @@ function DonationBill({ donationValue }) {
                 </Typography>
                 <div className={classes.flexContainer}>
                     <Typography>Your Donation</Typography>
-                    <Typography>Rs.{donationAmount}</Typography>
+                    <Typography>{donationAmount} GWei</Typography>
                 </div>
-                <div className={classes.flexContainer}>
+                {/* <div className={classes.flexContainer}>
                     <Typography>SupporTroops Tip</Typography>
-                    <Typography>Rs.{tipAmount}</Typography>
-                </div>
+                    <Typography>{tipAmount} ETH</Typography>
+                </div> */}
                 <Divider
                     style={{ marginTop: "0.5rem", marginBottom: "0.5rem" }}
                 />
                 <div className={classes.flexContainer}>
                     <Typography>Total Amount</Typography>
-                    <Typography>Rs.{totalAmount}</Typography>
+                    <Typography>{totalAmount} GWei</Typography>
                 </div>
             </CardContent>
         </Card>
